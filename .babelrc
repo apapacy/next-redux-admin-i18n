@@ -1,0 +1,13 @@
+{
+    "presets": [
+    "es2015",
+    "es2017",
+    "react",
+    "stage-0"
+  ],
+  "plugins": [
+    "transform-runtime",
+    "transform-decorators-legacy",
+    "styled-jsx/babel"
+  ]
+}

@@ -2,6 +2,33 @@ import React from 'react';
 import nextRoutes from 'next-routes';
 export const routes = nextRoutes();
 
-routes
-.add('index', '/:lang(ru|en)?', '/index')
-.add('about', '/:lang(ru|en)?/about', '/about')
+const lang = '/:lang(ru|en)?'
+
+const wrapper = {
+  add(...args) {
+    routes.add(...args)
+    return wrapper
+  },
+  trans(name, params, page) {
+    if (!page) {
+      page = name
+    }
+    if (!params) {
+      params = ''
+    }
+    let route
+    if (page === '/index') {
+      route = ''
+    } else {
+      route = page
+    }
+    route = `${lang}${route}${params}`
+    console.log(route)
+    routes.add(name, route, page)
+    return wrapper
+  }
+}
+
+wrapper
+.trans('index', '', '/index')
+.trans('about', '', '/about')

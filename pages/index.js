@@ -1,15 +1,12 @@
 import React from 'react';
 import { I18Link } from '../components/i18link'
+import TranslatedPage  from '../components/translatedpage'
 import { translate } from 'react-i18next';
 import i18n from '../app/i18n';
 
 
 @translate(['page2', 'common'], { i18n, wait: process.browser })
-export default class Page extends React.Component {
-   static getInitialProps = async ({ req }) => {
-    if (req && !process.browser) return i18n.getInitialProps(req, ['page2', 'common']);
-    return {};
-  };
+export default class Page extends TranslatedPage {
   render() {
   const props = this.props;
   console.log('++++++++++++++++++',props)

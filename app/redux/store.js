@@ -1,6 +1,11 @@
 import { createStore, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunkMiddleware from 'redux-thunk'
+import logger from 'redux-logger';
+import {
+    persist,
+    deserialize
+} from './persist';
 
 const exampleInitialState = {
   lastUpdate: 0,
@@ -40,5 +45,9 @@ export const addCount = () => dispatch => {
 }
 
 export const initStore = (initialState = exampleInitialState) => {
-  return createStore(reducer, initialState, composeWithDevTools(applyMiddleware(thunkMiddleware)))
+  const state = deserialize();
+  return createStore(
+    reducer,
+    {...initialState, ...state},
+    composeWithDevTools(applyMiddleware(thunkMiddleware, persist, logger)))
 }

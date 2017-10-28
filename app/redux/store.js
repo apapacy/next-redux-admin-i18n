@@ -40,7 +40,7 @@ export const reducer = (state = exampleInitialState, action) => {
       return {...state, ...action.data.data, ...action.options}
     case 'FAILURE':
       console.log('start', action.error)
-      return Object.assign({}, state, action)
+      return Object.assign({}, state, {error: true} )
     default: return state
   }
 }
@@ -48,7 +48,7 @@ export const reducer = (state = exampleInitialState, action) => {
 
 export function getTime(options){
     return {
-      promise: axios.get('http://time.jsontest.com/'),
+      promised: () => axios.get('http://time.jsontest.com/'),
       types: ['START', 'SUCCESS', 'FAILURE'],
       options
     };

@@ -46,7 +46,7 @@ export default class Page extends TranslatedPage {
 
   static getInitialProps = async ({ req, store }) => {
     console.log('initial')
-   await store.dispatchAsync(getTime())
+    await store.dispatchAsync(getTime())
    if (req && !process.browser) return i18n.getInitialProps(req, ['page2', 'common']);
    return {};
  };

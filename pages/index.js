@@ -9,7 +9,12 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import {namespaceConfig} from 'fast-redux'
 
-const DEFAULT_STATE = {build: 21}
+import { initStore, startClock, addCount, serverRenderClock } from '../app/redux/store'
+import withRedux from 'next-redux-wrapper'
+
+
+
+/*const DEFAULT_STATE = {build: 21}
 
 const {actionCreator, getState: getHomepageState} = namespaceConfig('homepage', DEFAULT_STATE)
 
@@ -23,11 +28,18 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({ bumpBuild }, dispatch)
+}*/
+
+function mapDispatchToProps(dispatch) {
+  return {
+    bumpBuild: bindActionCreators(addCount, dispatch),
+    startClock: bindActionCreators(startClock, dispatch)
+  }
 }
 
-
-@reduxPage
-@connect(mapStateToProps, mapDispatchToProps)
+// @reduxPage
+@withRedux(initStore, null, mapDispatchToProps)
+@connect(state => state, mapDispatchToProps)
 @translate(['page2', 'common'], { i18n, wait: process.browser })
 export default class Page extends TranslatedPage {
   render() {
@@ -40,7 +52,7 @@ export default class Page extends TranslatedPage {
       <a>here</a>
     </I18Link>{ props.userAgent }
     <p>scoped!</p>
-    <h3>Current build: {props.build}</h3>
+    <h3>Current build: {props.count}</h3>
     <p><button onClick={(e) => props.bumpBuild(1)}>Bump build!</button></p>
   <style jsx>{`
     p {

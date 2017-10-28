@@ -69,7 +69,7 @@ export const addCount = () => dispatch => {
 export const initStore = (initialState = exampleInitialState) => {
   // const state = deserialize();
   const store = createStore(reducer, {...initialState},
-    composeWithDevTools(applyMiddleware(thunkMiddleware, logger, promised)))
+    composeWithDevTools(applyMiddleware(thunkMiddleware, promised, logger)))
   store.dispatchAsync = function(action) {
     this.dispatch(action)
     return action.promise

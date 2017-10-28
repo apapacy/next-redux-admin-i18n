@@ -37,7 +37,7 @@ export const reducer = (state = exampleInitialState, action) => {
     case 'SUCCESS':
       console.log('success', action.data.data)
       console.log('success', typeof action.data.data)
-      return Object.assign({}, state, action.data.data)
+      return {...state, ...action.data.data, ...action.options}
     case 'FAILURE':
       console.log('start', action.error)
       return Object.assign({}, state, action)
@@ -46,10 +46,11 @@ export const reducer = (state = exampleInitialState, action) => {
 }
 
 
-export function getTime(){
+export function getTime(options){
     return {
       promise: axios.get('http://time.jsontest.com/'),
-      types: ['START', 'SUCCESS', 'FAILURE']
+      types: ['START', 'SUCCESS', 'FAILURE'],
+      options
     };
 }
 // ACTIONS

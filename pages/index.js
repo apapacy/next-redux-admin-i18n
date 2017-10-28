@@ -33,7 +33,8 @@ function mapDispatchToProps (dispatch) {
 function mapDispatchToProps(dispatch) {
   return {
     bumpBuild: bindActionCreators(addCount, dispatch),
-    startClock: bindActionCreators(startClock, dispatch)
+    startClock: bindActionCreators(startClock, dispatch),
+    getTime: bindActionCreators(getTime, dispatch)
   }
 }
 
@@ -44,11 +45,16 @@ function mapDispatchToProps(dispatch) {
 export default class Page extends TranslatedPage {
 
   static getInitialProps = async ({ req, store }) => {
+    console.log('initial')
    await store.dispatchAsync(getTime())
    if (req && !process.browser) return i18n.getInitialProps(req, ['page2', 'common']);
    return {};
  };
 
+  componentDidMount() {
+    console.log('fif,ount')
+    setInterval(() => this.props.getTime({rest: 'test'}), 10000)
+  }
   render() {
   const props = this.props;
 
@@ -57,9 +63,9 @@ export default class Page extends TranslatedPage {
 <I18Link route='about' {...props}>
       <a>here</a>
     </I18Link>{ props.userAgent }
-    <p>scoped!</p>
+    <p>scoped!{props.time}</p>
     <h3>Current build: {props.count}</h3>
-    <p><button onClick={(e) => props.bumpBuild(1)}>Bump build!</button></p>
+    <p><button onClick={(e) => props.bumpBuild(1)}>Bump build!{props.time}</button></p>
   <style jsx>{`
     p {
       color: #fff;

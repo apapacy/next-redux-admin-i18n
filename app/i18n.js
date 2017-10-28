@@ -7,7 +7,6 @@ import LanguageDetector from 'i18next-browser-languagedetector'
 const pathDetector = {
   name: 'path',
   lookup (options) {
-    console.log('path options',options)
     // options -> are passed in options
     const matches = /^\/(ru|en)(\/|$)/.exec(window.location.pathname)
     if (matches && matches[1]) {

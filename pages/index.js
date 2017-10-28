@@ -9,7 +9,7 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import {namespaceConfig} from 'fast-redux'
 
-import { initStore, startClock, addCount, serverRenderClock } from '../app/redux/store'
+import { initStore, startClock, addCount, serverRenderClock, getTime } from '../app/redux/store'
 import withRedux from 'next-redux-wrapper'
 
 
@@ -42,9 +42,15 @@ function mapDispatchToProps(dispatch) {
 @connect(state => state, mapDispatchToProps)
 @translate(['page2', 'common'], { i18n, wait: process.browser })
 export default class Page extends TranslatedPage {
+
+  static getInitialProps = async ({ req, store }) => {
+   await store.dispatchAsync(getTime())
+   if (req && !process.browser) return i18n.getInitialProps(req, ['page2', 'common']);
+   return {};
+ };
+
   render() {
   const props = this.props;
-  console.log('++++++++++++++++++',props)
 
     return <div>Welcome to next.js!++{props.t('test')}
  Click{' '}

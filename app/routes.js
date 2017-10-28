@@ -23,7 +23,6 @@ const wrapper = {
       route = page
     }
     route = `${lang}${route}${params}`
-    console.log(route)
     routes.add(name, route, page)
     return wrapper
   }
